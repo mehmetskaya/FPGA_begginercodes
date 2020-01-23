@@ -1,24 +1,3 @@
-----------------------------------------------------------------------------------
--- Company: 
--- Engineer: 
--- 
--- Create Date: 01/22/2020 10:20:01 PM
--- Design Name: 
--- Module Name: edge_dedctor - Behavioral
--- Project Name: 
--- Target Devices: 
--- Tool Versions: 
--- Description: 
--- 
--- Dependencies: 
--- 
--- Revision:
--- Revision 0.01 - File Created
--- Additional Comments:
--- 
-----------------------------------------------------------------------------------
-
-
 library IEEE;
 use IEEE.STD_LOGIC_1164.ALL;
 use IEEE.STD_LOGIC_UNSIGNED.ALL;
@@ -46,7 +25,6 @@ architecture Behavioral of edge_dedector is
 
 signal r_edge_count : STD_LOGIC_VECTOR ( 1 downto 0);
 signal f_edge_count : STD_LOGIC_VECTOR ( 1 downto 0);
-signal decesion : STD_LOGIC_VECTOR ( 1 downto 0);
 signal twait : STD_LOGIC_VECTOR ( 3 downto 0);
 signal Ad  : STD_LOGIC;
 signal Bd  : STD_LOGIC;
@@ -57,7 +35,7 @@ signal Bddd :std_logic;
 signal rising    :std_logic;
 signal falling   :std_logic;
 
-type state_type is(off,awake,count,triggered,risingedge,fallingedge);
+type state_type is(off,awake,count,trigger,risingedge,fallingedge);
 signal state: state_type;
 attribute INIT: STRING;
 attribute INIT OF state: SIGNAL IS "off";
@@ -65,13 +43,12 @@ attribute INIT OF state: SIGNAL IS "off";
 begin
 Ad <= A;
 Bd <= B;
-edge <= decesion;
 
 edge_process : process (clk,reset)
 begin
 
 if reset = '1' then
-decesion <= "11";
+edge <= "11";
 r_edge_count <= (others => '0');
 f_edge_count <= (others => '0');
 twait <= (others => '0');
@@ -96,7 +73,7 @@ end if;
 case state is
 
 when awake =>
-decesion <= "00";
+edge <= "00";
 twait <= twait + '1';
 if twait="1111" then
 state<=count;
@@ -112,35 +89,33 @@ if (rising='1' and (Addd='0' or Bddd='0')) then
 r_edge_count <= r_edge_count +'1';
 end if;
 if r_edge_count = "11" then
-state<=triggered;
+state<=trigger;
 else
 state<=count;
 end if;
 if f_edge_count = "11" then
-state<=triggered;
+state<=trigger;
 else
 state<=count;
 end if;
 
-when triggered =>
+when trigger =>
 if f_edge_count > r_edge_count then
 state<=fallingedge;
-edge <= '0';
+edge <= "01";
 else
 state<=risingedge;
-edge <= '1';
+edge <= "10";
 end if;
 
 when fallingedge =>
 if update = '1' then
-decesion <= "01";
 state<=awake;
 else
 state<=fallingedge;
 end if;
 
 when risingedge =>
-decesion <= "10";
 if update = '1' then
 state<=awake;
 else
