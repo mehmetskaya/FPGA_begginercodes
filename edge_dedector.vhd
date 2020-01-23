@@ -80,12 +80,12 @@ Add <= Ad;
 Addd <= Add;
 Bdd <= Bd;
 Bddd <= Bdd;
-if (Addd='1' and Ad='0') or (Bddd='1' and Bd='0') then
+if (Addd='1' and Add='0') or (Bddd='1' and Bdd='0') then
 falling <= '1';
 else
 falling <= '0';
 end if;
-if (Addd='0' and Ad='1') or (Bddd='0' and Bd='1') then
+if (Addd='0' and Add='1') or (Bddd='0' and Bdd='1') then
 rising <= '1';
 else
 rising <= '0';
