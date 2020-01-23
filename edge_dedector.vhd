@@ -17,7 +17,7 @@ entity edge_dedector is
            B : in STD_LOGIC;
            reset : in STD_LOGIC;
            update: in STD_LOGIC;
-           edge : std_logic_vector(1 downto 0)
+           edge : out std_logic_vector(1 downto 0)
          );
 end edge_dedector;
 
