@@ -43,7 +43,7 @@ architecture behavior of edge_dedector_tb is
 begin
  
 	-- Instantiate the Unit Under Test (UUT)
-   uut: stepper PORT MAP (
+   uut: edge_dedector PORT MAP (
           clk => clk,
           A => A,
           B => B,
