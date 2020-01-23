@@ -38,7 +38,8 @@ entity edge_dedector is
            B : in STD_LOGIC;
            reset : in STD_LOGIC;
            update: in STD_LOGIC;
-           edge : out STD_LOGIC);
+           edge : std_logic_vector(1 downto 0)
+         );
 end edge_dedector;
 
 architecture Behavioral of edge_dedector is
@@ -64,12 +65,13 @@ attribute INIT OF state: SIGNAL IS "off";
 begin
 Ad <= A;
 Bd <= B;
+edge <= decesion;
 
 edge_process : process (clk,reset)
 begin
 
 if reset = '1' then
-decesion <= (others => '0');
+decesion <= "11";
 r_edge_count <= (others => '0');
 f_edge_count <= (others => '0');
 twait <= (others => '0');
@@ -94,6 +96,7 @@ end if;
 case state is
 
 when awake =>
+decesion <= "00";
 twait <= twait + '1';
 if twait="1111" then
 state<=count;
@@ -130,12 +133,14 @@ end if;
 
 when fallingedge =>
 if update = '1' then
+decesion <= "01";
 state<=awake;
 else
 state<=fallingedge;
 end if;
 
 when risingedge =>
+decesion <= "10";
 if update = '1' then
 state<=awake;
 else
