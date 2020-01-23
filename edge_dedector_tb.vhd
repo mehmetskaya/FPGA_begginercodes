@@ -5,15 +5,15 @@ USE ieee.std_logic_1164.ALL;
 -- arithmetic functions with Signed or Unsigned values
 --USE ieee.numeric_std.ALL;
  
-ENTITY edge_dedector_tb IS
-END edge_dedector_tb;
+entity edge_dedector_tb IS
+end edge_dedector_tb;
  
-ARCHITECTURE behavior OF edge_dedector_tb IS 
+architecture behavior of edge_dedector_tb is 
  
     -- Component Declaration for the Unit Under Test (UUT)
  
-    COMPONENT edge_dedector
-    PORT(
+    component edge_dedector
+    port(
          clk : IN  std_logic;
          A : IN  std_logic;
          B : IN  std_logic;
@@ -21,7 +21,7 @@ ARCHITECTURE behavior OF edge_dedector_tb IS
          update : IN  std_logic;
          edge : OUT  std_logic_vector(1 downto 0)
         );
-    END COMPONENT;
+    end component;
     
 
    --Inputs
@@ -61,7 +61,6 @@ begin
 		wait for clk_period/2;
    end process;
        
-
    -- Stimulus process
    stim_proc: process
    begin		
