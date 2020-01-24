@@ -23,8 +23,8 @@ end edge_dedector;
 
 architecture Behavioral of edge_dedector is
 
-signal r_edge_count : STD_LOGIC_VECTOR ( 1 downto 0);
-signal f_edge_count : STD_LOGIC_VECTOR ( 1 downto 0);
+signal r_edge_count : STD_LOGIC_VECTOR ( 19 downto 0);
+signal f_edge_count : STD_LOGIC_VECTOR ( 19 downto 0);
 signal twait : STD_LOGIC_VECTOR ( 3 downto 0);
 signal Ad  : STD_LOGIC;
 signal Bd  : STD_LOGIC;
@@ -61,11 +61,13 @@ Bdd <= Bd;
 Bddd <= Bdd;
 if (Addd='1' and Add='0') or (Bddd='1' and Bdd='0') then
 falling <= '1';
+f_edge_count <= f_edge_count +'1';
 else
 falling <= '0';
 end if;
 if (Addd='0' and Add='1') or (Bddd='0' and Bdd='1') then
 rising <= '1';
+r_edge_count <= r_edge_count +'1';
 else
 rising <= '0';
 end if;
@@ -82,12 +84,6 @@ state<=awake;
 end if;
 
 when count =>
-if (falling='1' and (Addd='1' or Bddd='1')) then
-f_edge_count <= f_edge_count +'1';
-end if;
-if (rising='1' and (Addd='0' or Bddd='0')) then
-r_edge_count <= r_edge_count +'1';
-end if;
 if r_edge_count = "11" then
 state<=trigger;
 else
