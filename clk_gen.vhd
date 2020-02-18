@@ -93,7 +93,7 @@ clk_gen : process (clk_in_buf, reset_n)
          if count_r = count_full_c then -- if counter register is equal to N_times-1
             count_r <= (others => '0'); -- reset the counter register
             clk_out_buf <= not clk_out_buf;-- toggle the clk_out_buf
-         else -- else
+         else -- else counter register is not equal to N_times-1
             clk_out_buf <= clk_out_buf;-- keep the clk_out_buf the same
          end if;
       end if;
