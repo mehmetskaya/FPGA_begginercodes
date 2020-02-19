@@ -5,8 +5,8 @@
 -- Create Date:    11:33:33 01/22/2020 
 -- Design Name:    Clock Generation
 -- Module Name:    clk_gen - Behavioral 
--- Project Name:   Step Motor
--- Target Devices: Spartan 6 (Mimas V2)
+-- Project Name:   
+-- Target Devices: 
 -- Tool versions:  ISE 14.7
 -- Description:    This module is created to generate clock needed for components
 --
